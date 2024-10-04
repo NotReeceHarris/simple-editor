@@ -24,6 +24,12 @@
                     // Minimum width for sidebar
                     sidebar.style.width = `${newWidth}px`;
                 }
+
+                if (newWidth < 208 && newWidth > 80) {
+                    // Minimum width for sidebar
+                    sidebar.style.width = `208px`;
+                }
+                
                 if (newWidth < 80) {
                     // Minimum width for sidebar
                     isHidden = true;
