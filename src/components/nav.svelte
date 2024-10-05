@@ -17,15 +17,15 @@
     });
 </script>
 
-<nav class="select-none flex flex-col z-50">
+<nav class="select-none flex flex-col z-50 w-screen">
     <div
         data-tauri-drag-region
-        class="fixed w-screen h-9 border-zinc-700 border-b"
+        class="fixed w-screen h-9 max-h-9 border-zinc-700 border-b"
     ></div>
 
-    <div class="flex text-white">
+    <div class="flex text-white w-screen">
         <div
-            class="flex gap-2 w-52 h-9 px-3 place-items-center ps-4 pe-4 border-r border-zinc-700"
+            class="flex gap-2 w-52 min-w-52 h-9 px-3 place-items-center ps-4 pe-4 border-r border-zinc-700"
         >
             <div
                 class="cursor-pointer bg-red-400 w-3 h-3 rounded-full z-10"
@@ -96,7 +96,7 @@
     </div>
     
 
-    <div class="border-zinc-700 h-9 top-9 border-b text-white w-full z-10 bg-window">
+    <div class="border-zinc-700 h-9 max-h-9 top-9 border-b text-white w-full z-10 bg-window">
         <div
             class="flex justify-evenly place-items-center w-52 h-9 border-r border-zinc-700"
         >
