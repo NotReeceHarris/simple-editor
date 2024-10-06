@@ -1,9 +1,7 @@
 <script lang="ts">
-    import Editor from '$components/editor.svelte';
+    import Editor from "$components/editor.svelte";
 </script>
 
-<div class="h-full flex w-full">
-
+<div class="h-full w-full">
     <Editor />
-
 </div>
