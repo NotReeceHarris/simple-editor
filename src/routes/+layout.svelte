@@ -15,7 +15,7 @@
     <div class="flex">
         <Sidebar />
         <div class="bg-editor flex-grow text-white flex flex-col h-[calc(100vh-72px)]">
-            <div class="flex grow">
+            <div class="flex grow h-[calc(100vh-108px)]">
                 <slot />
             </div>
             <Info />
