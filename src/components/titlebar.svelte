@@ -17,6 +17,13 @@
     let maximizeIcon: HTMLElement; // Icon to show when window is not maximized
     let restoreIcon: HTMLElement;  // Icon to show when window is maximized
 
+    const dropDowns: Record<string, HTMLDivElement | null> = {
+        "file": null,
+        "edit": null,
+        "terminal": null,
+        "help": null
+    };
+
     const appWindow = getCurrentWindow();               // Get the current window instance using Tauri's API
     const minimize = () => appWindow.minimize();        // Function to minimize the window
     const maximize = () => appWindow.toggleMaximize();  // Function to toggle between maximizing and restoring the window
@@ -46,16 +53,16 @@
 
         // Attach event listeners to buttons when the component is mounted
         if (currentPlatform === 'macos') {
-            minimizeMacosElm.addEventListener("click", minimize); // Minimize window on button click
-            maximizeMacosElm.addEventListener("click", maximize); // Maximize/restore window on button click
-            closeMacosElm.addEventListener("click", close);       // Close window on button click
+            minimizeMacosElm?.addEventListener("click", minimize); // Minimize window on button click
+            maximizeMacosElm?.addEventListener("click", maximize); // Maximize/restore window on button click
+            closeMacosElm?.addEventListener("click", close);       // Close window on button click
         } else {
-            minimizeElm.addEventListener("click", minimize);
-            maximizeElm.addEventListener("click", maximize);
-            closeElm.addEventListener("click", close);
+            minimizeElm?.addEventListener("click", minimize);
+            maximizeElm?.addEventListener("click", maximize);
+            closeElm?.addEventListener("click", close);
         }
 
-        toggleMaximizeIcons();                           // Check window state and update icons initially
+        toggleMaximizeIcons();  // Check window state and update icons initially
     });
 
     // Svelte lifecycle function to run when the component is destroyed/removed from DOM
@@ -64,13 +71,13 @@
 
         // Remove event listeners from buttons to avoid memory leaks
         if (currentPlatform === 'macos') {
-            minimizeMacosElm.removeEventListener("click", minimize); // Minimize window on button click
-            maximizeMacosElm.removeEventListener("click", maximize); // Maximize/restore window on button click
-            closeMacosElm.removeEventListener("click", close);       // Close window on button click
+            minimizeMacosElm?.removeEventListener("click", minimize); // Minimize window on button click
+            maximizeMacosElm?.removeEventListener("click", maximize); // Maximize/restore window on button click
+            closeMacosElm?.removeEventListener("click", close);       // Close window on button click
         } else {
-            minimizeElm.removeEventListener("click", minimize);
-            maximizeElm.removeEventListener("click", maximize);
-            closeElm.removeEventListener("click", close);
+            minimizeElm?.removeEventListener("click", minimize);
+            maximizeElm?.removeEventListener("click", maximize);
+            closeElm?.removeEventListener("click", close);
         }
     });
 </script>
@@ -84,23 +91,130 @@
     </div>
 
     <div class="os:windows flex gap-1 text-white place-items-center text-sm">
-        <span class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">File</span>
-        <span class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">Edit</span>
-        <span class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">Terminal</span>
-        <span class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">Help</span>
+        <div aria-hidden="true" on:mouseleave={() => {
+            dropDowns.file?.classList.add("hidden")
+        }} class="relative">
+            <button on:click={() => {
+
+                for (const key in dropDowns) {
+                    if (key !== "file" && dropDowns) {
+                        dropDowns[key]?.classList.add("hidden")
+                    }
+                }
+
+                dropDowns.file?.classList.toggle("hidden")
+            }} 
+
+            class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">
+                File
+            </button>
+            <div bind:this={dropDowns.file} class="hidden text-white/[.8] text-xs flex flex-col absolute bg-window py-1.5 rounded-md top-6 z-50 border-zinc-400/[.4] border w-56">
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">New File</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">New Window</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Open File</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Open Folder</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Open Recent</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Save</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Save As</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Save All</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Exit</span>
+            </div>
+        </div>
+
+        <div aria-hidden="true" on:mouseleave={() => {
+            dropDowns.edit?.classList.add("hidden")
+        }} class="relative">
+            <button on:click={() => {
+
+                for (const key in dropDowns) {
+                    if (key !== "edit" && dropDowns) {
+                        dropDowns[key]?.classList.add("hidden")
+                    }
+                }
+
+                dropDowns.edit?.classList.toggle("hidden")
+            }} class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">
+                Edit
+            </button>
+            <div bind:this={dropDowns.edit} class="hidden text-white/[.8] text-xs flex flex-col absolute bg-window py-1.5 rounded-md top-6 z-50 border-zinc-400/[.4] border w-56">
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Undo</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Redo</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Cut</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Copy</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Paste</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Find</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Replace</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Find In Files</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Replace In Files</span>
+            </div>
+        </div>
+
+        <div aria-hidden="true" on:mouseleave={() => {
+            dropDowns.terminal?.classList.add("hidden")
+        }} class="relative">
+            <button on:click={() => {
+
+                for (const key in dropDowns) {
+                    if (key !== "terminal" && dropDowns) {
+                        dropDowns[key]?.classList.add("hidden")
+                    }
+                }
+
+                dropDowns.terminal?.classList.toggle("hidden")
+            }} class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">
+                Terminal
+            </button>
+            <div bind:this={dropDowns.terminal} class="hidden text-white/[.8] text-xs flex flex-col absolute bg-window py-1.5 rounded-md top-6 z-50 border-zinc-400/[.4] border w-56">
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">New Terminal</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Split Terminal</span>
+            </div>
+        </div>
+
+        <div aria-hidden="true" on:mouseleave={() => {
+            dropDowns.help?.classList.add("hidden")
+        }} class="relative">
+            <button on:click={() => {
+                
+                for (const key in dropDowns) {
+                    if (key !== "help" && dropDowns) {
+                        dropDowns[key]?.classList.add("hidden")
+                    }
+                }
+
+                dropDowns.help?.classList.toggle("hidden")
+            }} class="cursor-pointer hover:bg-white/[.1] hover:text-white text-white/[.7] px-1.5 py-0.5 rounded-md">
+                Help
+            </button>
+            <div bind:this={dropDowns.help} class="hidden text-white/[.8] text-xs flex flex-col absolute bg-window py-1.5 rounded-md top-6 z-50 border-zinc-400/[.4] border w-56">
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Welcome</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Github</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Documentation</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Release Notes</span>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Report Issue</span>
+                <div class="border-b border-zinc-400/[.4] my-2"></div>
+                <span class="hover:bg-primary/[.5] cursor-pointer pl-3 py-1 rounded-md mx-1">Restart</span>
+            </div>
+        </div>
+    
     </div>
 
     <div class="grow select-none -z-50"/>
 
     <div class="flex gap-1 os:windows place-items-center">
-        <button bind:this={minimizeElm} class="text-white py-2.5 px-3.5 hover:bg-white/[.1]">
+        <button bind:this={minimizeElm} class="text-white py-2.5 px-3 hover:bg-white/[.1]">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" d="M14 8v1H3V8z"/></svg>
         </button>
-        <button bind:this={maximizeElm} class="text-white py-2.5 px-3.5 hover:bg-white/[.1]">
+        <button bind:this={maximizeElm} class="text-white py-2.5 px-3 hover:bg-white/[.1]">
             <span bind:this={maximizeIcon}><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" d="M3 3v10h10V3zm9 9H4V4h8z"/></svg></span>
             <span bind:this={restoreIcon} class="hidden"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="currentColor"><path d="M3 5v9h9V5zm8 8H4V6h7z"/><path fill-rule="evenodd" d="M5 5h1V4h7v7h-1v1h2V3H5z" clip-rule="evenodd"/></g></svg></span>
         </button>
-        <button bind:this={closeElm} class="text-white py-2.5 px-3.5 hover:bg-red-400/[.1]">
+        <button bind:this={closeElm} class="text-white py-2.5 px-3 hover:bg-red-400/[.1]">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="m7.116 8l-4.558 4.558l.884.884L8 8.884l4.558 4.558l.884-.884L8.884 8l4.558-4.558l-.884-.884L8 7.116L3.442 2.558l-.884.884z" clip-rule="evenodd"/></svg>
         </button>
     </div>

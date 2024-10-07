@@ -7,7 +7,8 @@ export default {
     extend: {
       colors: {
         window: '#353638',
-        editor: '#27282a'
+        editor: '#27282a',
+        primary: '#5f9c5d',
       },
     },
   },
