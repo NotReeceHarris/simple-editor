@@ -24,7 +24,7 @@
 
 <main class="bg-window w-screen h-screen flex flex-col">
     <Titlebar />
-    <div class="flex w-full h-full">
+    <div class="flex w-full h-full relative">
         <Sidebar />
         <slot />
     </div>

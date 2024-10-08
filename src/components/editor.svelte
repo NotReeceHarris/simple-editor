@@ -102,5 +102,5 @@
   </div>
 
   <!-- This is the cover the scrollbar line and also cover the spacing at the top of the editor -->
-  <div class="absolute right-0 border-zinc-700 border-l w-4 h-[calc(100%-128px)] top-[100px]"/>
+  <div class="absolute right-0 border-zinc-700 border-l w-4 h-full top-[64px]"/>
 </div>
