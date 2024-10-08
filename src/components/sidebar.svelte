@@ -30,7 +30,7 @@
                             if (entry.name.replace('.', '').toLowerCase() === name) {
                                 div.innerHTML = `
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M10.072 8.024L5.715 3.667l.618-.62L11 7.716v.618L6.333 13l-.618-.619z" clip-rule="evenodd"/></svg>
-                                <img class="w-4 h-4" src="/icons/${icon.name}.svg">
+                                <img class="w-3.5 h-3.5" src="/icons/${icon.name}.svg">
                                 `;
                                 break;
                             }
@@ -52,7 +52,7 @@
                     if (icon.fileNames) {
                         for (const name of icon.fileNames) {
                            if (entry.name.toLowerCase() === name) {
-                               div.innerHTML = `<img class="w-4 h-4" src="/icons/${icon.name}.svg">`;
+                               div.innerHTML = `<img class="w-3.5 h-3.5" src="/icons/${icon.name}.svg">`;
                                break;
                            }
                         }
@@ -61,7 +61,7 @@
                     if (icon.fileExtensions) {
                         for (const ext of icon.fileExtensions) {
                             if (entry.name.split('.').includes(ext)) {
-                                div.innerHTML = `<img class="w-4 h-4" src="/icons/${icon.name}.svg">`;
+                                div.innerHTML = `<img class="w-3.5 h-3.5" src="/icons/${icon.name}.svg">`;
                                 break;
                             }
                         }
@@ -110,6 +110,6 @@
 
     </div>
 
-    <div bind:this={fileTree} class="flex flex-col pt-2 gap-0.5 h-full text-white text-sm overflow-y-auto" />
+    <div bind:this={fileTree} class="flex flex-col pt-2 gap-0.5 h-full text-white text-xs overflow-y-auto" />
 
 </div>
