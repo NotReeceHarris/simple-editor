@@ -32,7 +32,7 @@
 		const editor = monaco.editor.create(editorElm);
 		const model = monaco.editor.createModel(
 			"console.log('Hello from Monaco! (the editor, not the city...)')",
-			'javascript'
+			'typescript'
 		);
 
 		editor.setModel(model);
@@ -54,13 +54,13 @@
         const crumb = model.getWordAtPosition(decoration.range.getStartPosition())
 
         if (crumb) {
-          breadCrumb = breadCrumb + crumb.word + ' > '
+          breadCrumb = breadCrumb + ' > ' + crumb.word
         }
 
       });
 
       if (breadcrumbElm) {
-        breadcrumbElm.textContent = breadCrumb;
+        breadcrumbElm.textContent = breadCrumb.slice(3);
       }
 
       window.dispatchEvent(new CustomEvent("editor-cursor-move", {
@@ -71,7 +71,7 @@
     resize = () => {
       editor?.layout({
         width: containerElm.clientWidth - 1,
-        height: containerElm.clientHeight,
+        height: containerElm.clientHeight - 8,
       });
     };
 
@@ -86,20 +86,21 @@
 	});
 </script>
 
-<style>
-  :global(.monaco-editor .overlayWidgets) {
-    position: fixed !important;
-    top: 46px !important;
-    left: 50vw !important;
-    transform: translateX(-50%) !important;
-    z-index: 100 !important;
-  }
-</style>
-
 <div class="w-full h-full flex flex-col border-zinc-700 border-r">
-  <div class="h-9 w-full bg-window border-zinc-700 border-b"></div>
-  <div bind:this={breadcrumbElm} class="px-3 overflow-hidden h-9 w-full bg-editor border-zinc-700 border-b flex place-items-center text-white text-xs text-ellipsis"></div>
-  <div class="w-full h-full relative bg-editor" bind:this={containerElm}>
-    <div class="absolute top-0 left-0" bind:this={editorElm} />
+
+  <!-- File list -->
+  <div class="h-9 min-h-9 max-h-9 w-full bg-window border-zinc-700 border-b" />
+
+  <!-- Breadcrumbs -->
+  <div class="px-3 h-7 min-h-7 max-h-7 max-w-full w-full bg-editor border-zinc-700 border-b flex place-items-center text-white text-xs overflow-hidden">
+    <span class="line-clamp-1" bind:this={breadcrumbElm} />
   </div>
+  
+  <!-- Monaco editor -->
+  <div class="w-full h-full relative bg-editor" bind:this={containerElm}>
+    <div class="absolute top-2 left-0" bind:this={editorElm} />
+  </div>
+
+  <!-- This is the cover the scrollbar line and also cover the spacing at the top of the editor -->
+  <div class="absolute right-0 border-zinc-700 border-l w-4 h-[calc(100%-128px)] top-[100px]"/>
 </div>

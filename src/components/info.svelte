@@ -22,7 +22,7 @@
 </script>
 
 
-<div class="h-9 px-3 text-white text-[10px] w-screen border-zinc-700 border-t flex place-items-center justify-between">
+<div class="h-7 max-h-7 min-h-7 px-3 text-white text-[10px] w-screen border-zinc-700 border-t flex place-items-center justify-between">
 
     <div class="grow flex"></div>
 

@@ -82,7 +82,7 @@
     });
 </script>
 
-<div data-tauri-drag-region class="h-9 max-h-9 min-h-9 pl-1 border-zinc-700 border-b flex">
+<div data-tauri-drag-region class="h-9 max-h-9 min-h-9 pl-2 border-zinc-700 border-b flex">
 
     <div class="flex gap-2 place-items-center os:macos">
         <button bind:this={closeMacosElm} class="bg-[#fc5753] border-[#df4744] border-[1px] w-[13px] h-[13px] rounded-full" />
